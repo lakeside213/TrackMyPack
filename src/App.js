@@ -1,26 +1,49 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React, { Component, Fragment } from "react";
+import Header from "./components/Header";
+import Lists from "./components/Lists";
+import CreateParcel from "./components/Dialogs/createParcel";
+import BottomDrawer from "./components/BottomDrawer";
+import ViewPackage from "./components/ViewPackage";
+import { readClipboard } from "./Clipboard";
 class App extends Component {
+  state = {
+    createDialogOpen: false,
+    bottomDrawerOpen: true,
+    viewPackage: {
+      open: false,
+      data: {}
+    }
+  };
+  componentDidMount() {
+    const g = readClipboard();
+  }
+  createDialogToggler = () => {
+    this.setState(prevState => {
+      return { createDialogOpen: !prevState.createDialogOpen };
+    });
+  };
+  bottomDrawerToggler = () => {
+    this.setState(prevState => {
+      return { bottomDrawerOpen: !prevState.bottomDrawerOpen };
+    });
+  };
+
   render() {
+    let { createDialogOpen, bottomDrawerOpen, viewPackage } = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Fragment>
+        <Header />
+        <Lists createToggler={this.createDialogToggler} />
+        <CreateParcel
+          toggler={this.createDialogToggler}
+          open={createDialogOpen}
+        />
+        <BottomDrawer
+          toggler={this.bottomDrawerToggler}
+          open={bottomDrawerOpen}
+        />
+        <ViewPackage open={viewPackage.open} />
+      </Fragment>
     );
   }
 }

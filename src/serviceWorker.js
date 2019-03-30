@@ -20,6 +20,7 @@ const isLocalhost = Boolean(
     )
 );
 
+
 export function register(config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
@@ -31,6 +32,20 @@ export function register(config) {
       return;
     }
 
+    const cacheName = 'shell-content';
+    const filesToCache = [
+      "/assets/js/inobounce.min.js",
+      '/',
+    ];
+    window.addEventListener('install', function(e) {
+      console.log('[ServiceWorker] Install');
+      e.waitUntil(
+        caches.open(cacheName).then(function(cache) {
+          console.log('[ServiceWorker] Caching app shell');
+          return cache.addAll(filesToCache);
+        })
+      );
+    });
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
