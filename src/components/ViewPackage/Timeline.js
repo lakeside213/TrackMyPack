@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
+import Moment from "react-moment";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -39,7 +40,13 @@ function SimpleList(props) {
                 secondary={event.location}
               />
               <ListItemSecondaryAction>
-                <ListItemText primary={"15.jan"} secondary="09.27" />
+                <ListItemText
+                  primary={
+                    <Moment fromNow parse="YYYY-MM-DD HH:mm">{`${event.date} ${
+                      event.time
+                    }`}</Moment>
+                  }
+                />
               </ListItemSecondaryAction>
             </ListItem>
           </Fragment>
