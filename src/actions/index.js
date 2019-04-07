@@ -6,12 +6,16 @@ import {
 import { validateNumber, getCourier } from "../NumberValidation";
 import axios from "axios";
 
+const ROOT_URL =
+  !proess.env.NODE_ENV || process.env.NODE_ENV === "development"
+    ? "http://localhost:8000/"
+    : "https://trackmypack.herokuapp.com/";
 export const addPackage = (trackingNumber, packageName) => {
   return async function(dispatch) {
     try {
       if (validateNumber(trackingNumber) === true) {
         const lang = navigator.language || navigator.userLanguage;
-        let response = await axios.post("http://localhost:8000/trackpackage", {
+        let response = await axios.post(`${ROOT_URL}/trackpackage`, {
           systemLang: lang,
           courier: getCourier(trackingNumber),
           trackingNumber: trackingNumber
@@ -34,14 +38,11 @@ export const readClipboard = () => {
       const content = await navigator.clipboard.readText();
       if (validateNumber(content) === true) {
         const lang = navigator.language || navigator.userLanguage;
-        const response = await axios.post(
-          "http://localhost:8000/trackpackage",
-          {
-            systemLang: lang,
-            courier: getCourier(content),
-            trackingNumber: content
-          }
-        );
+        const response = await axios.post(`${ROOT_URL}/trackpackage`, {
+          systemLang: lang,
+          courier: getCourier(content),
+          trackingNumber: content
+        });
         dispatch({ type: OPEN_BOTTOM_DRAWER, payload: response });
       }
     } catch (e) {}
