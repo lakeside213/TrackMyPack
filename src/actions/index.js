@@ -7,7 +7,7 @@ import { validateNumber, getCourier } from "../NumberValidation";
 import axios from "axios";
 
 const ROOT_URL =
-  !proess.env.NODE_ENV || process.env.NODE_ENV === "development"
+  !process.env.NODE_ENV || process.env.NODE_ENV === "development"
     ? "http://localhost:8000/"
     : "https://trackmypack.herokuapp.com/";
 export const addPackage = (trackingNumber, packageName) => {
