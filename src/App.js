@@ -1,22 +1,23 @@
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { readClipboard } from "./actions";
 import Header from "./components/Header";
 import Lists from "./components/Lists";
 import CreateParcel from "./components/Dialogs/createParcel";
 import BottomDrawer from "./components/BottomDrawer";
 import ViewPackage from "./components/ViewPackage";
-import { readClipboard } from "./Clipboard";
+
 class App extends Component {
   state = {
     createDialogOpen: false,
-    bottomDrawerOpen: true,
+    bottomDrawerOpen: false,
     viewPackage: {
       open: false,
       data: {}
     }
   };
-  componentDidMount() {
-    const g = readClipboard();
-  }
+
+  componentDidMount() {}
   createDialogToggler = () => {
     this.setState(prevState => {
       return { createDialogOpen: !prevState.createDialogOpen };
@@ -47,5 +48,10 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+function mapStateToProps({ user, bottomDrawer }) {
+  return { user, bottomDrawer };
+}
+export default connect(
+  mapStateToProps,
+  { readClipboard }
+)(App);

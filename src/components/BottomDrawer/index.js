@@ -30,7 +30,7 @@ class TemporaryDrawer extends React.Component {
       <div>
         <Drawer anchor="bottom" open={open} onClose={toggler}>
           <div tabIndex={0} role="button" onClick={toggler} onKeyDown={toggler}>
-            <MoreActions />
+            <Info />
           </div>
         </Drawer>
       </div>
