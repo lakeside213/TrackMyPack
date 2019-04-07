@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Moment from "react-moment";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -11,11 +12,11 @@ import Avatar from "@material-ui/core/Avatar";
 import LocalShipping from "@material-ui/icons/LocalShipping";
 import Store from "@material-ui/icons/Store";
 import MoreVert from "@material-ui/icons/MoreVert";
-import AccessTime from "@material-ui/icons/AccessTime";
+import TimeIcon from "@material-ui/icons/AccessTime";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import LocationCity from "@material-ui/icons/LocationCity";
+import LocationIcon from "@material-ui/icons/LocationOn";
 import Grid from "@material-ui/core/Grid";
 
 const styles = theme => ({
@@ -31,28 +32,36 @@ const styles = theme => ({
 
 class CheckboxListSecondary extends Component {
   render() {
-    const { classes, value } = this.props;
+    const { classes, value, packageName, events } = this.props;
 
     return (
       <Fragment>
         <ListItem key={value} button>
           <ListItemText
-            primary={"Smasung galaxy ace "}
+            primary={packageName}
             secondary={
               <Fragment>
                 <Typography variant="body1">
-                  Packet delievered to in Aachen
+                  {events[events.length - 1].status}
                 </Typography>
                 <Grid container>
+                  {events[events.length - 1].location ? (
+                    <Grid item xs={6}>
+                      <Typography variant="caption">
+                        <LocationIcon className={classes.icon} />{" "}
+                        {events[events.length - 1].location}
+                      </Typography>
+                    </Grid>
+                  ) : (
+                    ""
+                  )}
+
                   <Grid item xs={6}>
                     <Typography variant="caption">
-                      <LocationCity className={classes.icon} />{" "}
-                      Cottbus,Deutschland
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Typography variant="caption">
-                      <AccessTime className={classes.icon} /> 8 mins ago
+                      <TimeIcon className={classes.icon} />{" "}
+                      <Moment fromNow parse="YYYY-MM-DD HH:mm">{`${
+                        events[events.length - 1].date
+                      } ${events[events.length - 1].time}`}</Moment>
                     </Typography>
                   </Grid>
                 </Grid>

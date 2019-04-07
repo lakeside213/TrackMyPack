@@ -54,8 +54,13 @@ class FullWidthTabs extends React.Component {
   };
 
   render() {
-    const { classes, theme, createToggler } = this.props;
-
+    const { classes, theme, createToggler, packages } = this.props;
+    let inTransitPackages = packages.filter(function(pack) {
+      return pack.isDelivered === false;
+    });
+    let deliveredPackages = packages.filter(function(pack) {
+      return pack.isDelivered === true;
+    });
     return (
       <div className={classes.root}>
         <AppBar position="static" color="default" className={classes.appBar}>
@@ -75,7 +80,8 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <List dir={theme.direction} />
+          <List dir={theme.direction} packages={inTransitPackages} />
+          <List dir={theme.direction} packages={deliveredPackages} />
         </SwipeableViews>
         <Fab
           size="medium"

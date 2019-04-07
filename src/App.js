@@ -31,10 +31,14 @@ class App extends Component {
 
   render() {
     let { createDialogOpen, bottomDrawerOpen, viewPackage } = this.state;
+    const { user } = this.props;
     return (
       <Fragment>
         <Header />
-        <Lists createToggler={this.createDialogToggler} />
+        <Lists
+          createToggler={this.createDialogToggler}
+          packages={user.packages}
+        />
         <CreateParcel
           toggler={this.createDialogToggler}
           open={createDialogOpen}

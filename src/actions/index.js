@@ -9,11 +9,11 @@ export const addPackage = (trackingNumber, packageName) => {
         const lang = navigator.language || navigator.userLanguage;
         let response = await axios.post("http://localhost:8000/trackpackage", {
           systemLang: lang,
-          courier: getCourier(content),
-          trackingNumber: content
+          courier: getCourier(trackingNumber),
+          trackingNumber: trackingNumber
         });
-        response["packageName"] = packageName;
-        dispatch({ type: CREATE_PACKAGE, payload: response });
+        response.data["packageName"] = packageName;
+        dispatch({ type: CREATE_PACKAGE, payload: response.data });
       }
     } catch (e) {
       console.log(e);

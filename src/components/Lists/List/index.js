@@ -13,13 +13,20 @@ const styles = theme => ({
 
 class CheckboxListSecondary extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, packages } = this.props;
 
     return (
       <Fragment>
         <List className={classes.root}>
-          {[0, 1, 2, 3].map(value => (
-            <ListItem value={value} divider />
+          {packages.map(pack => (
+            <ListItem
+              packName={pack.packageName}
+              value={pack.index}
+              trackingNumber={pack.trackingNumber}
+              events={pack.events}
+              packageName={pack.packageName}
+              divider
+            />
           ))}
         </List>
       </Fragment>
