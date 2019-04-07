@@ -22,44 +22,28 @@ function ListItemLink(props) {
 }
 
 function SimpleList(props) {
-  const { classes } = props;
+  const { classes, events } = props;
   return (
     <div className={classes.root}>
       <List>
-        <Divider />
-        <ListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography variant="subtitle2">
-                Packet was scuccesfully delivered
-              </Typography>
-            }
-            secondary="Cottbus,Deutschland"
-          />
-          <ListItemSecondaryAction>
-            <ListItemText primary={"15.jan"} secondary="09.27" />
-          </ListItemSecondaryAction>
-        </ListItem>
-        <Divider />
-        <ListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography variant="subtitle2">
-                Packet was scuccesfully delivered
-              </Typography>
-            }
-            secondary="Cottbus,Deutschland"
-          />
-          <ListItemSecondaryAction>
-            <ListItemText primary={"15.jan"} secondary="09.27" />
-          </ListItemSecondaryAction>
-        </ListItem>
+        {events.map(event => (
+          <Fragment>
+            <ListItem button divider>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="subtitle2">{event.status}</Typography>
+                }
+                secondary={event.location}
+              />
+              <ListItemSecondaryAction>
+                <ListItemText primary={"15.jan"} secondary="09.27" />
+              </ListItemSecondaryAction>
+            </ListItem>
+          </Fragment>
+        ))}
       </List>
     </div>
   );

@@ -1,4 +1,8 @@
-import { CREATE_PACKAGE, OPEN_BOTTOM_DRAWER } from "../consts/types";
+import {
+  CREATE_PACKAGE,
+  OPEN_BOTTOM_DRAWER,
+  FETCH_PACKAGE
+} from "../consts/types";
 import { validateNumber, getCourier } from "../NumberValidation";
 import axios from "axios";
 
@@ -20,6 +24,10 @@ export const addPackage = (trackingNumber, packageName) => {
     }
   };
 };
+export const fetchPackage = trackingNumber => ({
+  type: FETCH_PACKAGE,
+  trackingNumber
+});
 export const readClipboard = () => {
   return async function(dispatch) {
     try {

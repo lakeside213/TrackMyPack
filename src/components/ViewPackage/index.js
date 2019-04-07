@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import Moment from "react-moment";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -27,43 +28,48 @@ function Transition(props) {
 
 class FullScreenDialog extends React.Component {
   render() {
-    const { classes, open } = this.props;
-    return (
-      <Fragment>
-        <Dialog
-          fullScreen
-          open={open}
-          onClose={this.handleClose}
-          TransitionComponent={Transition}
-        >
-          <AppBar />
+    const { classes, open, closePackageDetails, data } = this.props;
+    if (data) {
+      return (
+        <Fragment>
+          <Dialog
+            fullScreen
+            open={open}
+            onClose={closePackageDetails}
+            TransitionComponent={Transition}
+          >
+            <AppBar
+              packageName={data.packageName}
+              closePackageDetails={closePackageDetails}
+            />
 
-          <List>
-            <ListItem button>
-              <ListItemText primary="DHL" secondary="11234565432" />
-            </ListItem>
+            <List>
+              <ListItem button>
+                <ListItemText
+                  primary={data.courier}
+                  secondary={data.trackingNumber}
+                />
+              </ListItem>
 
-            <Divider />
-            <ListItem button>
-              <ListItemText
-                primary="ROUTE"
-                secondary={
-                  <Fragment>
-                    <Typography variant="caption">Cottbus > Cottbus</Typography>
-                  </Fragment>
-                }
-              />
-            </ListItem>
-            <Divider />
-          </List>
-          <Typography variant="caption" gutterBottom align="center">
-            Last updated 6 mins ago
-          </Typography>
-          <Timeline />
-        </Dialog>
-        <EditPackage />
-      </Fragment>
-    );
+              <Divider />
+            </List>
+            <Typography variant="caption" gutterBottom align="center">
+              Last updated{" "}
+              {data.events ? (
+                <Moment fromNow parse="YYYY-MM-DD HH:mm">{`${
+                  data.events[data.events.length - 1].date
+                } ${data.events[data.events.length - 1].time}`}</Moment>
+              ) : (
+                ""
+              )}
+            </Typography>
+
+            <Timeline events={data.events} />
+          </Dialog>
+          <EditPackage />
+        </Fragment>
+      );
+    }
   }
 }
 

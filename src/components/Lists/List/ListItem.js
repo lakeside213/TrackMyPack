@@ -32,13 +32,27 @@ const styles = theme => ({
 
 class CheckboxListSecondary extends Component {
   render() {
-    const { classes, value, packageName, events } = this.props;
+    const {
+      classes,
+      value,
+      packageName,
+      events,
+      openPackageDetails,
+      trackingNumber,
+      pack
+    } = this.props;
 
     return (
       <Fragment>
-        <ListItem key={value} button>
+        <ListItem
+          key={value}
+          button
+          onClick={() => {
+            openPackageDetails(pack);
+          }}
+        >
           <ListItemText
-            primary={packageName}
+            primary={<Typography variant="h6">{packageName}</Typography>}
             secondary={
               <Fragment>
                 <Typography variant="body1">

@@ -54,7 +54,13 @@ class FullWidthTabs extends React.Component {
   };
 
   render() {
-    const { classes, theme, createToggler, packages } = this.props;
+    const {
+      classes,
+      theme,
+      createToggler,
+      packages,
+      openPackageDetails
+    } = this.props;
     let inTransitPackages = packages.filter(function(pack) {
       return pack.isDelivered === false;
     });
@@ -80,8 +86,16 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <List dir={theme.direction} packages={inTransitPackages} />
-          <List dir={theme.direction} packages={deliveredPackages} />
+          <List
+            dir={theme.direction}
+            packages={inTransitPackages}
+            openPackageDetails={openPackageDetails}
+          />
+          <List
+            dir={theme.direction}
+            packages={deliveredPackages}
+            openPackageDetails={openPackageDetails}
+          />
         </SwipeableViews>
         <Fab
           size="medium"

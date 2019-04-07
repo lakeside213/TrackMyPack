@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { readClipboard } from "./actions";
+import { readClipboard, fetchPackage } from "./actions";
 import Header from "./components/Header";
 import Lists from "./components/Lists";
 import CreateParcel from "./components/Dialogs/createParcel";
@@ -18,6 +18,12 @@ class App extends Component {
   };
 
   componentDidMount() {}
+  openPackageDetails = data => {
+    this.setState({ viewPackage: { open: true, data } });
+  };
+  closePackageDetails = () => {
+    this.setState({ viewPackage: { open: false, data: {} } });
+  };
   createDialogToggler = () => {
     this.setState(prevState => {
       return { createDialogOpen: !prevState.createDialogOpen };
@@ -38,6 +44,7 @@ class App extends Component {
         <Lists
           createToggler={this.createDialogToggler}
           packages={user.packages}
+          openPackageDetails={this.openPackageDetails}
         />
         <CreateParcel
           toggler={this.createDialogToggler}
@@ -47,13 +54,13 @@ class App extends Component {
           toggler={this.bottomDrawerToggler}
           open={bottomDrawerOpen}
         />
-        <ViewPackage open={viewPackage.open} />
+        <ViewPackage open={viewPackage.open} data={viewPackage.data} />
       </Fragment>
     );
   }
 }
-function mapStateToProps({ user, bottomDrawer }) {
-  return { user, bottomDrawer };
+function mapStateToProps({ user, bottomDrawer, selectedPackage }) {
+  return { user, bottomDrawer, selectedPackage };
 }
 export default connect(
   mapStateToProps,

@@ -13,7 +13,7 @@ const styles = theme => ({
 
 class CheckboxListSecondary extends Component {
   render() {
-    const { classes, packages } = this.props;
+    const { classes, packages, openPackageDetails } = this.props;
 
     return (
       <Fragment>
@@ -25,7 +25,9 @@ class CheckboxListSecondary extends Component {
               trackingNumber={pack.trackingNumber}
               events={pack.events}
               packageName={pack.packageName}
+              pack={pack}
               divider
+              openPackageDetails={openPackageDetails}
             />
           ))}
         </List>

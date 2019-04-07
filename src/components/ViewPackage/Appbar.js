@@ -89,7 +89,7 @@ class PrimarySearchAppBar extends React.Component {
 
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
-    const { classes } = this.props;
+    const { classes, closePackageDetails, packageName } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -125,11 +125,14 @@ class PrimarySearchAppBar extends React.Component {
               className={classes.menuButton}
               color="inherit"
               aria-label="Open drawer"
+              onClick={() => {
+                closePackageDetails();
+              }}
             >
               <ArrowBack />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              Samsung Galaxy S8 plus
+              {packageName}
             </Typography>
 
             <div className={classes.grow} />

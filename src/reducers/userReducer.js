@@ -1,12 +1,14 @@
-import { FETCH_USER, CREATE_PACKAGE } from "../consts/types";
+import { FETCH_USER, CREATE_PACKAGE, FETCH_PACKAGE } from "../consts/types";
 
-const INITIAL_STATE = { packages: [], settings: {} };
+const INITIAL_STATE = { selectedPackage: {}, packages: [], settings: {} };
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case FETCH_USER:
+    case FETCH_USER: {
       return { ...state };
-    case CREATE_PACKAGE:
+    }
+
+    case CREATE_PACKAGE: {
       let index = state.packages.length;
       const {
         packageName,
@@ -21,7 +23,7 @@ export default function(state = INITIAL_STATE, action) {
           ...state.packages,
           {
             id: index,
-            packageName,
+            packageName: action.pay,
             trackingNumber,
             events,
             isDelivered,
@@ -29,6 +31,21 @@ export default function(state = INITIAL_STATE, action) {
           }
         ]
       };
+    }
+    case FETCH_PACKAGE: {
+      const { trackingNumber } = action;
+
+      const packIndex = state.packages.findIndex(pack => {
+        return trackingNumber === pack.trackingNumber;
+      });
+      console.log(state.packages[packIndex]);
+      return {
+        ...state,
+        selectedPackage: {
+          ...state.packages[packIndex]
+        }
+      };
+    }
     default:
       return state;
   }
